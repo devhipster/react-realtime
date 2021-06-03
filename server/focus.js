@@ -21,6 +21,9 @@ server.listen(5000,()=>{
   console.log(' listening on port 5000')
 })
 
-io.on('connection',(conn)=>{
+io.on('connection',(socket)=>{
   console.log('someone is connected = ',conn);
+  socket.on('message',(data)=>{
+    socket.broadcast.emit('message',data);
+  })
 })
