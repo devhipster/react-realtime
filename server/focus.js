@@ -20,3 +20,7 @@ app.get('/home',(req,res)=>{
 server.listen(5000,()=>{
   console.log(' listening on port 5000')
 })
+
+io.on('connection',(conn)=>{
+  console.log('someone is connected = ',conn);
+})
