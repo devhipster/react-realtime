@@ -1,7 +1,22 @@
-import {ApolloServer, gql} from 'apollo-server';
+import {ApolloServer, gql} from 'apollo-server-express';
 import express from 'express'; // eslint-disable-li
 import mongoose from 'mongoose'; // eslint-disable-line
 const app = express();
+
+const {
+  APP_PORT = 5000,
+  NODE_ENV = 'devlopment'
+} = process.env;
+
+const IN_PROD = NODE_ENV !== 'production';
+
+app.disable('x-powered-by');
+const apollo = new ApolloServer({
+  typeDef,
+  resolvers,
+  playground:NODE_ENV !== 'production'
+})
+apollo.applyMiddleware({app});
 
 const bookSet = [
   {title:'The Aweking',author:'Kate Chopin'},
@@ -32,8 +47,6 @@ const resolvers = {
   }
 }
 
-const apollo = new ApolloServer({typeDef,resolvers})
-apollo.applyMiddleware({app});
 
 
 app.listen().then( ({url})=>{ console.log(`Running on  ${url}`)});
